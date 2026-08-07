@@ -1,19 +1,18 @@
-﻿using System;
+﻿using BudgetLife.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BudgetLife.Models;
 
-namespace BudgetLife.Repositories
+namespace BudgetLife.Services
 {
-    public interface IExpenseRepository
+    public interface IExpenseService
     {
-        Expense? GetById(int id);
         List<Expense> GetAll();
+        Expense? GetById(int id);
         void Add(Expense expense);
         void Update(Expense expense);
         void Delete(int id);
-        bool ExistsByCategoryId(int categoryId);
     }
 }

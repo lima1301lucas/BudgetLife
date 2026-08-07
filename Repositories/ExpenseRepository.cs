@@ -92,6 +92,18 @@ namespace BudgetLife.Repositories
             commmand.ExecuteNonQuery();
         }
 
+        public bool ExistsByCategoryId(int categoryId)
+        {
+            using var connection = _databaseConnection.CreateConnection();
+            connection.Open();
+
+            using var command = new MySqlCommand("SELECT COUNT(*) FROM expenses WHERE category_id = @categoryId", connection);
+            command.Parameters.AddWithValue("@categoryId", categoryId);
+
+            long count = (long)command.ExecuteScalar()!;
+            return count > 0;
+        }
+
         private static Expense MapReaderToExpenseWithCategory(MySqlDataReader reader)
         {
             return new Expense
