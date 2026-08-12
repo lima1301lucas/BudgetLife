@@ -167,6 +167,10 @@ namespace BudgetLife.UI
             {
                 Console.WriteLine($"Erro: {ex.Message}");
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ocorreu um erro inesperado: {ex.Message}");
+            }
         }
 
         private void EditExpense()
@@ -246,6 +250,10 @@ namespace BudgetLife.UI
             {
                 Console.WriteLine($"Erro: {ex.Message}");
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ocorreu um erro inesperado: {ex.Message}");
+            }
         }
 
         private void DeleteExpense()
@@ -268,6 +276,10 @@ namespace BudgetLife.UI
             catch (ArgumentException ex)
             {
                 Console.WriteLine($"Erro: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ocorreu um erro inesperado: {ex.Message}");
             }
         }
 
@@ -312,6 +324,10 @@ namespace BudgetLife.UI
             catch (ArgumentException ex)
             {
                 Console.WriteLine($"Erro: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ocorreu um erro inesperado: {ex.Message}");
             }
         }
 
@@ -358,6 +374,10 @@ namespace BudgetLife.UI
             {
                 Console.WriteLine($"Erro: {ex.Message}");
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ocorreu um erro inesperado: {ex.Message}");
+            }
         }
 
         private void DeleteCategory()
@@ -380,6 +400,10 @@ namespace BudgetLife.UI
             catch (ArgumentException ex)
             {
                 Console.WriteLine($"Erro: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ocorreu um erro inesperado: {ex.Message}");
             }
         }
 
