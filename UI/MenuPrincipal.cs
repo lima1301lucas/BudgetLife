@@ -1,5 +1,6 @@
 ﻿using BudgetLife.Models;
 using BudgetLife.Services;
+using System.Globalization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -459,7 +460,7 @@ namespace BudgetLife.UI
                 Console.Write(message);
                 string? input = Console.ReadLine();
 
-                if (DateTime.TryParse(input, out DateTime value))
+                if (DateTime.TryParseExact(input, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime value))
                 {
                     return value;
                 }
