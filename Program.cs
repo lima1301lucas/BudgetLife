@@ -8,7 +8,17 @@ var config = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirector
 
 string connectionString = config.GetConnectionString("Default")!;
 var dbConnection = new DatabaseConnection(connectionString);
-using var connection = dbConnection.CreateConnection();
+
+try
+{
+    using var testConnection = dbConnection.CreateConnection();
+    testConnection.Open();
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Não foi possível conectar ao banco de dados: {ex.Message}");
+    return;
+}
 
 var categoryRepository = new CategoryRepository(dbConnection);
 var expenseRepository = new ExpenseRepository(dbConnection);
