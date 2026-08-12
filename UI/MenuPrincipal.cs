@@ -110,31 +110,9 @@ namespace BudgetLife.UI
 
         private void RegisterExpense()
         {
-            Console.Write("Nome da despesa: ");
-            string? name = Console.ReadLine();
-
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                Console.WriteLine("Nome inválido.");
-                return;
-            }
-
-            Console.Write("Valor da despesa: ");
-            string? amountInput = Console.ReadLine();
-
-            if (!decimal.TryParse(amountInput, out decimal amount))
-            {
-                Console.WriteLine("Valor inválido.");
-                return;
-            }
-
-            Console.Write("Data da despesa (dd/MM/yyyy): ");
-            string? dateInput = Console.ReadLine();
-            if (!DateTime.TryParse(dateInput, out DateTime date))
-            {
-                Console.WriteLine("Data inválida.");
-                return;
-            }
+            string name = ReadText("Nome da despesa: ");
+            decimal amount = ReadDecimal("Valor da despesa: ");
+            DateTime date = ReadDate("Data da despesa (dd/MM/yyyy): ");
 
             var categorias = _categoryService.GetAll();
             foreach (var c in categorias)
@@ -142,13 +120,7 @@ namespace BudgetLife.UI
                 Console.WriteLine($"[{c.Id}] {c.Name}");
             }
 
-            Console.Write("Id da categoria: ");
-            string? categoryIdInput = Console.ReadLine();
-            if (!int.TryParse(categoryIdInput, out int categoryId))
-            {
-                Console.WriteLine("Id de categoria inválido.");
-                return;
-            }
+            int categoryId = ReadInt("Id da categoria: ");
 
             var expense = new Expense
             {
@@ -177,13 +149,7 @@ namespace BudgetLife.UI
         {
             ListExpenses();
 
-            Console.Write("Selecione o Id da despesa que deseja editar: ");
-            string? expenseIdInput = Console.ReadLine();
-            if (!int.TryParse(expenseIdInput, out int expenseId))
-            {
-                Console.WriteLine("Id de despesa inválido.");
-                return;
-            }
+            int expenseId = ReadInt("Selecione o Id da despesa que deseja editar: ");
 
             var existingExpense = _expenseService.GetById(expenseId);
             if (existingExpense == null)
@@ -192,31 +158,9 @@ namespace BudgetLife.UI
                 return;
             }
 
-            Console.Write("Nome da despesa: ");
-            string? name = Console.ReadLine();
-
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                Console.WriteLine("Nome inválido.");
-                return;
-            }
-
-            Console.Write("Valor da despesa: ");
-            string? amountInput = Console.ReadLine();
-
-            if (!decimal.TryParse(amountInput, out decimal amount))
-            {
-                Console.WriteLine("Valor inválido.");
-                return;
-            }
-
-            Console.Write("Data da despesa (dd/MM/yyyy): ");
-            string? dateInput = Console.ReadLine();
-            if (!DateTime.TryParse(dateInput, out DateTime date))
-            {
-                Console.WriteLine("Data inválida.");
-                return;
-            }
+            string name = ReadText("Nome da despesa: ");
+            decimal amount = ReadDecimal("Valor da despesa: ");
+            DateTime date = ReadDate("Data da despesa (dd/MM/yyyy): ");
 
             var categorias = _categoryService.GetAll();
             foreach (var c in categorias)
@@ -224,13 +168,7 @@ namespace BudgetLife.UI
                 Console.WriteLine($"[{c.Id}] {c.Name}");
             }
 
-            Console.Write("Id da categoria: ");
-            string? categoryIdInput = Console.ReadLine();
-            if (!int.TryParse(categoryIdInput, out int categoryId))
-            {
-                Console.WriteLine("Id de categoria inválido.");
-                return;
-            }
+            int categoryId = ReadInt("Id da categoria: ");
 
             var newExpense = new Expense
             {
@@ -260,11 +198,21 @@ namespace BudgetLife.UI
         {
             ListExpenses();
 
-            Console.Write("Selecione o Id da despesa que deseja excluir: ");
-            string? expenseIdInput = Console.ReadLine();
-            if (!int.TryParse(expenseIdInput, out int expenseId))
+            int expenseId = ReadInt("Selecione o Id da despesa que deseja excluir: ");
+
+            var existingExpense = _expenseService.GetById(expenseId);
+            if (existingExpense == null)
             {
-                Console.WriteLine("Id de despesa inválido.");
+                Console.WriteLine("Despesa não encontrada.");
+                return;
+            }
+
+            Console.Write($"Tem certeza que deseja excluir a despesa \"{existingExpense.Name}\"? (S/N): ");
+            string? confirmacao = Console.ReadLine();
+
+            if (confirmacao?.Trim().ToUpper() != "S")
+            {
+                Console.WriteLine("Exclusão cancelada.");
                 return;
             }
 
@@ -302,14 +250,7 @@ namespace BudgetLife.UI
 
         private void RegisterCategory()
         {
-            Console.Write("Nome da categoria: ");
-            string? name = Console.ReadLine();
-
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                Console.WriteLine("Nome inválido.");
-                return;
-            }
+            string name = ReadText("Nome da categoria: ");
 
             var category = new Category
             {
@@ -335,29 +276,16 @@ namespace BudgetLife.UI
         {
             ListCategory();
 
-            Console.Write("Selecione o Id da categoria que deseja editar: ");
-            string? categoryIdInput = Console.ReadLine();
-            if (!int.TryParse(categoryIdInput, out int categoryId))
-            {
-                Console.WriteLine("Id da categoria inválido.");
-                return;
-            }
-
+            int categoryId = ReadInt("Selecione o Id da categoria que deseja editar: ");
             var existingCategory = _categoryService.GetById(categoryId);
+            
             if (existingCategory == null)
             {
                 Console.WriteLine("Categoria não encontrada.");
                 return;
             }
 
-            Console.Write("Nome da categoria: ");
-            string? name = Console.ReadLine();
-
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                Console.WriteLine("Nome inválido.");
-                return;
-            }
+            string name = ReadText("Nome da categoria: ");
 
             var category = new Category
             {
@@ -384,11 +312,21 @@ namespace BudgetLife.UI
         {
             ListCategory();
 
-            Console.Write("Selecione o Id da categoria que deseja excluir: ");
-            string? categoryIdInput = Console.ReadLine();
-            if (!int.TryParse(categoryIdInput, out int categoryId))
+            int categoryId = ReadInt("Selecione o Id da categoria que deseja excluir: ");
+            var existingCategory = _categoryService.GetById(categoryId);
+
+            if (existingCategory == null)
             {
-                Console.WriteLine("Id de categoria inválido.");
+                Console.WriteLine("Categoria não encontrada.");
+                return;
+            }
+
+            Console.Write($"Tem certeza que deseja excluir a categoria \"{existingCategory.Name}\"? (S/N): ");
+            string? confirmacao = Console.ReadLine();
+
+            if (confirmacao?.Trim().ToUpper() != "S")
+            {
+                Console.WriteLine("Exclusão cancelada.");
                 return;
             }
 
@@ -481,6 +419,66 @@ namespace BudgetLife.UI
             {
                 string categoria = expense.Category?.Name ?? "Sem categoria";
                 Console.WriteLine($"[{expense.Id}] {expense.Name} - R$ {expense.Amount} - {expense.Date:dd/MM/yyyy} - {categoria}");
+            }
+        }
+
+        private string ReadText(string message)
+        {
+            while (true) 
+            {
+                Console.Write(message);
+                string? input = Console.ReadLine();
+
+                if (!string.IsNullOrWhiteSpace(input))
+                {
+                    return input;
+                }
+                Console.WriteLine("Valor inválido, tente novamente.");
+            }
+        }
+
+        private decimal ReadDecimal(string message)
+        {
+            while (true)
+            {
+                Console.Write(message);
+                string? input = Console.ReadLine();
+
+                if (decimal.TryParse(input, out decimal value))
+                {
+                    return value;
+                }
+                Console.WriteLine("Valor inválido, tente novamente.");
+            }
+        }
+
+        private DateTime ReadDate(string message)
+        {
+            while (true)
+            {
+                Console.Write(message);
+                string? input = Console.ReadLine();
+
+                if (DateTime.TryParse(input, out DateTime value))
+                {
+                    return value;
+                }
+                Console.WriteLine("Valor inválido, tente novamente.");
+            }
+        }
+
+        private int ReadInt(string message)
+        {
+            while (true)
+            {
+                Console.Write(message);
+                string? input = Console.ReadLine();
+
+                if (int.TryParse(input, out int value))
+                {
+                    return value;
+                }
+                Console.WriteLine("Valor inválido, tente novamente.");
             }
         }
     }
